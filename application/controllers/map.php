@@ -407,11 +407,16 @@ class Map extends CI_Controller {
         $exclude_array = array('id', 'remote_id', 'imei_no', 'district_name', 'uc_name', 'town_name', 'location', 'form_id', 'img1', 'img2', 'img3', 'img4', 'img5', 'img1_title', 'img2_title', 'img3_title', 'img4_title', 'img5_title', 'is_deleted');
         foreach ($forms_list as $form_entity) {
             $table_name = $form_entity['table_name'];
-            $results = $this->form_results_model->get_result_paginated_posted($table_name, $to_date, $from_date, $category_name, $filter_attribute_search, $town_filter, $posted_filters, $search_text, $district, $this->perPage, $selected_dc);
-//            $results = $this->form_results_model->get_form_results_category($forms_list, $to_date, $from_date, $category_name, $filter_attribute_search, $town_filter, $posted_filters, $search_text, $login_district, $this->perPage);
+            $results = $this->form_results_model->get_result_paginated_posted($table_name,
+             $to_date, $from_date, $category_name, $filter_attribute_search, $town_filter,
+             $posted_filters, $search_text, $district, $this->perPage, $selected_dc);
+//            $results = $this->form_results_model->get_form_results_category($forms_list, 
+//            $to_date, $from_date, $category_name, $filter_attribute_search, $town_filter, 
+//             $posted_filters, $search_text, $login_district, $this->perPage);
             foreach ($results as $k => $v) {
                 $record_array = array();
-                $imagess = $this->form_results_model->getResultsImages($v['id'], $v['form_id']);
+                $imagess = $this->form_results_model->getResultsImages($v['id'],
+                $v['form_id']);
                 if ($imagess) {
                     if (!in_array('image', $table_headers_array)) {
                         $table_headers_array = array_merge($table_headers_array, array('image'));
@@ -426,10 +431,12 @@ class Map extends CI_Controller {
                     }
                 }
                 $record_array = array_merge($record_array, array('form_id' => $v['form_id']));
-                $record_array = array_merge($record_array, array('created_datetime' => $v['created_datetime'], 'actions' => $v['id']));
+                $record_array = array_merge($record_array, array('created_datetime' => 
+                $v['created_datetime'], 'actions' => $v['id']));
                 $record_array_final[] = $record_array;
             }
-            $schema_list = $this->form_results_model->getTableHeadingsFromSchema($table_name);
+            $schema_list = $this->form_results_model->
+            getTableHeadingsFromSchema($table_name);
             $heading_query = array_merge($heading_query, $schema_list);
         }
         $send = array();
@@ -452,7 +459,8 @@ class Map extends CI_Controller {
                 }
             }
         }
-        $table_headers_array = array_merge($table_headers_array, array('created_datetime'));
+        $table_headers_array = array_merge($table_headers_array, 
+        array('created_datetime'));
         $table_headers_array = array_merge($table_headers_array, array('actions'));
         $data['headings'] = $table_headers_array;
         $data['form'] = $record_array_final;
@@ -471,15 +479,20 @@ class Map extends CI_Controller {
         $record_array_final = array();
         $table_headers_array = array();
         $heading_query = array();
-        $exclude_array = array('id', 'remote_id', 'imei_no', 'district_name', 'uc_name', 'town_name', 'location', 'form_id', 'img1', 'img2', 'img3', 'img4', 'img5', 'img1_title', 'img2_title', 'img3_title', 'img4_title', 'img5_title', 'is_deleted');
+        $exclude_array = array('id', 'remote_id', 'imei_no', 'district_name', 
+        'uc_name', 'town_name', 'location', 'form_id', 'img1', 'img2', 'img3', 
+        'img4', 'img5', 'img1_title', 'img2_title', 'img3_title', 'img4_title', 
+        'img5_title', 'is_deleted');
         foreach ($forms_list as $form_entity) {
             $table_name = $form_entity['table_name'];
             //$table_exist_bit = $this->form_results_model->check_table_exits($table_name);
             if (!is_table_exist($table_name)) {
-                $this->session->set_flashdata('validate', array('message' => 'No table schema has been built againts this application', 'type' => 'warning'));
+                $this->session->set_flashdata('validate', array('message' => 'No table 
+                schema has been built againts this application', 'type' => 'warning'));
                 redirect(base_url() . 'app');
             }
-            $results = $this->form_results_model->get_results_paginated($table_name, $this->perPage, $all_data);
+            $results = $this->form_results_model->get_results_paginated($table_name,
+            $this->perPage, $all_data);
             foreach ($results as $k => $v) {
                 $record_array = array();
                 foreach ($v as $key => $value) {
@@ -487,7 +500,8 @@ class Map extends CI_Controller {
                         $record_array = array_merge($record_array, array($key => $value));
                     }
                 }
-                $imagess = $this->form_results_model->getResultsImages($v['id'], $form_entity['form_id']);
+                $imagess = $this->form_results_model->getResultsImages($v['id'], 
+                $form_entity['form_id']);
                 if ($imagess) {
                     if (!in_array('image', $table_headers_array)) {
                         $table_headers_array = array_merge($table_headers_array, array('image'));
