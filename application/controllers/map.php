@@ -614,7 +614,8 @@ class Map extends CI_Controller {
         $app_filters_array = array();
         $heading_array = array();
         $record_array_final = array();
-        $results = $this->form_results_model->get_form_results_multiple_all_data($form_lists, $login_district);
+        $results = $this->form_results_model->
+        get_form_results_multiple_all_data($form_lists, $login_district);
         foreach ($results as $k => $v) {
             $record_array = array();
             $result_json = $v['record'];
@@ -644,10 +645,12 @@ class Map extends CI_Controller {
                 }
                 $record_array = array_merge($record_array, array($key => $value));
             }
-            $record_array = array_merge($record_array, array('created_datetime' => $v['created_datetime'], 'actions' => $v['id']));
+            $record_array = array_merge($record_array, array('created_datetime' => 
+            $v['created_datetime'], 'actions' => $v['id']));
             $record_array_final[] = $record_array;
         }
-        $heading_array = array_merge($heading_array, array('created_datetime', 'actions'));
+        $heading_array = array_merge($heading_array, 
+        array('created_datetime', 'actions'));
         $data['headings'] = $heading_array;
         $data['form'] = $record_array_final;
         $data['active_tab'] = 'app';
@@ -656,19 +659,22 @@ class Map extends CI_Controller {
     }
 
     /**
-     * method to get heading data of multiple form for all data based on filter array when posted
+     * method to get heading data of multiple form for all 
+     * data based on filter array when posted
      * @param  $form_list list of form in a single applicatoin
      * @param  $app_filter_list array of all filter set on which search is based
      * @return  array An array of form heading and its data
      * @author UbaidUllah Balti <ubaidcskiu@gmail.com>
      */
-    public function get_heading_data_multiple_all_for_posted($form_lists, $app_filter_list) {
+    public function get_heading_data_multiple_all_for_posted($form_lists, 
+    $app_filter_list) {
         $form_id = $form_lists[0]['form_id'];
         $data['form_id'] = $form_id;
         $selected_form = $this->form_model->get_form($form_id);
         $filter_attribute = array();
         if ($selected_form['filter'] != '') {
-            $filter_rec = array_filter(array_map('trim', explode(',', $selected_form['filter'])));
+            $filter_rec = array_filter(array_map('trim', 
+            explode(',', $selected_form['filter'])));
             foreach ($filter_rec as $key => $value) {
                 array_push($filter_attribute, $value);
             }
@@ -682,7 +688,8 @@ class Map extends CI_Controller {
         $heading_array = array();
         $record_array_final = array();
         $app_filters_array = array();
-        $results = $this->form_results_model->get_form_results_multiple_all_data($form_lists, $login_district);
+        $results = $this->form_results_model->
+        get_form_results_multiple_all_data($form_lists, $login_district);
         foreach ($results as $k => $v) {
             $record_array = array();
             $result_json = $v['record'];
@@ -739,7 +746,8 @@ class Map extends CI_Controller {
                 }
                 $record_array = array_merge($record_array, array($key => $value));
             }
-            $record_array = array_merge($record_array, array('created_datetime' => $v['created_datetime'], 'actions' => $v['id']));
+            $record_array = array_merge($record_array, array('created_datetime' => 
+            $v['created_datetime'], 'actions' => $v['id']));
             $record_array_final[] = $record_array;
         }
         $final_filter_sorted = array();
@@ -748,7 +756,8 @@ class Map extends CI_Controller {
             $final_filter_sorted[$key_sorter] = $app_filters_array[$key_sorter];
         }
         $data['app_filters_array'] = $final_filter_sorted;
-        $heading_array = array_merge($heading_array, array('created_datetime', 'actions'));
+        $heading_array = array_merge($heading_array, 
+        array('created_datetime', 'actions'));
         $data['headings'] = $heading_array;
         $data['form'] = $record_array_final;
         $data['active_tab'] = 'app';
@@ -768,7 +777,9 @@ class Map extends CI_Controller {
         $slug = $slug_id;
         if ($this->session->userdata('logged_in')) {
             if (!$this->acl->hasPermission('form', 'view')) {
-                $this->session->set_flashdata('validate', array('message' => "You don't have enough permissions to do this task.", 'type' => 'warning'));
+                $this->session->set_flashdata('validate', array('message' => 
+                "You don't have enough permissions to do this task.", 
+                'type' => 'warning'));
                 redirect(base_url() . 'application-map/' . $slug);
             }
             /** multiple form handling system statrs * */
