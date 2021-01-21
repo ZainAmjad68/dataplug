@@ -1447,17 +1447,29 @@ class Map extends CI_Controller {
                                     if ($headings[$i] == 'is_take_picture') {
                                     } else if ($headings[$i] == 'image') {
                                         $path = $form_item[$headings[$i]][0]['image'];
-                                        $image_row = "<tr align='center'><td colspan='2'><a href=" . $path . " class='image_colorbox' title='All Rights Reserved © 2013-".date('Y')." - DataPlug <br>By ITU Government of Punjab - Pakistan'><img src=" . $path . " alt='' width='200' height='200'/></a></td></tr>";
+                                        $image_row = "<tr align='center'><td colspan='2'><a href="
+                                         . $path . " class='image_colorbox' title='All Rights Reserved © 2013-"
+                                         .date('Y')." - DataPlug <br>By ITU Government of Punjab - Pakistan'><img src=" 
+                                         . $path . " alt='' width='200' height='200'/></a></td></tr>";
                                     } else if ($headings[$i] == 'created_datetime') {
-                                        $datetime_row .='<tr><td><b>DATE : </b></td><td>' . date('Y-m-d', strtotime($form_item[$headings[$i]])) . '</td></tr><tr><td><b>TIME : </b></td><td>' . date('H:i:s', strtotime($form_item[$headings[$i]])) . '</td></tr>';
+                                        $datetime_row .='<tr><td><b>DATE : </b></td><td>' 
+                                        . date('Y-m-d', strtotime($form_item[$headings[$i]])) 
+                                        . '</td></tr><tr><td><b>TIME : </b></td><td>' 
+                                        . date('H:i:s', strtotime($form_item[$headings[$i]])) . '</td></tr>';
                                     } else {
-                                        $map_data .= preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', $headings[$i]) . ' : ' . preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', $form_item[$headings[$i]]) . '<br>\n';
-                                        $data_row .= "<tr><td><b>" . preg_replace("/[^A-Za-z0-9\-]/", " ", strtoupper(urldecode($headings[$i]))) . " : </b></td><td>" . preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', strtoupper($form_item[$headings[$i]])) . "</td></tr>";
+                                        $map_data .= preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', $headings[$i]) 
+                                        . ' : ' . preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', 
+                                        $form_item[$headings[$i]]) . '<br>\n';
+                                        $data_row .= "<tr><td><b>" . preg_replace("/[^A-Za-z0-9\-]/", " ", 
+                                        strtoupper(urldecode($headings[$i]))) . " : </b></td><td>" 
+                                        . preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', 
+                                        strtoupper($form_item[$headings[$i]])) . "</td></tr>";
                                         $id = $form_item['id'];
                                     }
                                 }
                             }
-                            $final .='["' . $location[0] . '","' . $location[1] . '","' . $form_id . '","' . $icon_filename . '","' . $id . '","' . $category_name . '"] ,';
+                            $final .='["' . $location[0] . '","' . $location[1] . '","' . $form_id 
+                            . '","' . $icon_filename . '","' . $id . '","' . $category_name . '"] ,';
                         }
                     }
                     $searched_filter_attribute[] = $filter_attribute_value;
@@ -1473,19 +1485,24 @@ class Map extends CI_Controller {
     /**
      *  Get html information for single marker reocrd on mapview
      * @param  $locations array of  all data having info about each single record
-     * @param  $filter_attribute list of attributed based on data is parsed icons assigned
+     * @param  $filter_attribute list of attributed based on data is
+     *  parsed icons assigned
      * @param  $headings Heading list fetched from all results
      * @return  string A string concatinated with commas
      * @access Inline
      * @author UbaidUllah Balti <ubaidcskiu@gmail.com>
      */
-    private function getMapHtmlInfoSingle($locations = array(), $headings = array(), $filter_attribute) {
+    private function getMapHtmlInfoSingle($locations = array(), 
+    $headings = array(), $filter_attribute) {
         $final = '';
         if (count($locations)) {
             foreach ($filter_attribute as $filter_attribute_value) {
                 foreach ($locations as $form_item) {
-                    $category_name = (!empty($form_item[$filter_attribute_value])) ? $form_item[$filter_attribute_value] : str_replace('_', " ", ucfirst($filter_attribute_value));
-                    $pin_name = (!empty($form_item[$filter_attribute_value])) ? substr($form_item[$filter_attribute_value], 0, 1) . '1' : "all_visit";
+                    $category_name = (!empty($form_item[$filter_attribute_value])) 
+                    ? $form_item[$filter_attribute_value] : 
+                    str_replace('_', " ", ucfirst($filter_attribute_value));
+                    $pin_name = (!empty($form_item[$filter_attribute_value])) 
+                    ? substr($form_item[$filter_attribute_value], 0, 1) . '1' : "all_visit";
                     if (!file_exists(FCPATH . "assets/images/map_pins/" . $pin_name . ".png")) {
                         $icon_filename = base_url() . "assets/images/map_pins/default_pin.png";
                     } else {
@@ -1505,7 +1522,10 @@ class Map extends CI_Controller {
                             if ($headings[$i] == 'is_take_picture') {
                             } else if ($headings[$i] == 'image') {
                                 $path = $form_item[$headings[$i]][0]['image'];
-                                $image_row = "<tr align='center'><td colspan='2'><a href=" . $path . " class='image_colorbox' title='All Rights Reserved © 2013-".date('Y')." - DataPlug <br>By ITU Government of Punjab - Pakistan'><img src=" . $path . " alt='' width='200' height='200'/></a></td></tr>";
+                                $image_row = "<tr align='center'><td colspan='2'><a href=" . $path 
+                                . " class='image_colorbox' title='All Rights Reserved © 2013-".date('Y')
+                                ." - DataPlug <br>By ITU Government of Punjab - Pakistan'><img src=" . $path 
+                                . " alt='' width='200' height='200'/></a></td></tr>";
                             } else if ($headings[$i] == 'created_datetime') {
                                 $datetime_row .='<tr><td><b>DATE : </b></td><td>' . date('Y-m-d', strtotime($form_item[$headings[$i]])) . '</td></tr><tr><td><b>TIME : </b></td><td>' . date('H:i:s', strtotime($form_item[$headings[$i]])) . '</td></tr>';
                             } else {
