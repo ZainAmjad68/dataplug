@@ -1527,17 +1527,26 @@ class Map extends CI_Controller {
                                 ." - DataPlug <br>By ITU Government of Punjab - Pakistan'><img src=" . $path 
                                 . " alt='' width='200' height='200'/></a></td></tr>";
                             } else if ($headings[$i] == 'created_datetime') {
-                                $datetime_row .='<tr><td><b>DATE : </b></td><td>' . date('Y-m-d', strtotime($form_item[$headings[$i]])) . '</td></tr><tr><td><b>TIME : </b></td><td>' . date('H:i:s', strtotime($form_item[$headings[$i]])) . '</td></tr>';
+                                $datetime_row .='<tr><td><b>DATE : </b></td><td>' 
+                                . date('Y-m-d', strtotime($form_item[$headings[$i]])) 
+                                . '</td></tr><tr><td><b>TIME : </b></td><td>' 
+                                . date('H:i:s', strtotime($form_item[$headings[$i]])) . '</td></tr>';
                             } else {
-                                $map_data .= preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', $headings[$i]) . ' : ' . preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', $form_item[$headings[$i]]) . '<br>\n';
-                                $data_row .= "<tr><td><b>" . preg_replace("/[^A-Za-z0-9\-]/", " ", strtoupper(urldecode($headings[$i]))) . " : </b></td><td>" . preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', strtoupper($form_item[$headings[$i]])) . "</td></tr>";
+                                $map_data .= preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', $headings[$i]) 
+                                . ' : ' . preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', 
+                                $form_item[$headings[$i]]) . '<br>\n';
+                                $data_row .= "<tr><td><b>" . preg_replace("/[^A-Za-z0-9\-]/", " ", 
+                                strtoupper(urldecode($headings[$i]))) . " : </b></td><td>" 
+                                . preg_replace('/[^a-zA-Z0-9_ \[\]\.\-]/s', '', 
+                                strtoupper($form_item[$headings[$i]])) . "</td></tr>";
                                 $id = $form_item['id'];
                             }
                         }
                     }
                     $html_layout = $html_layout . $image_row . $data_row . $datetime_row;
                     $html_layout .= "</table>";
-                    $final .='["' . $location[0] . '","' . $location[1] . '","' . $html_layout . '","' . $icon_filename . '","' . $id . '","' . $category_name . '"] ,';
+                    $final .='["' . $location[0] . '","' . $location[1] . '","' . $html_layout 
+                    . '","' . $icon_filename . '","' . $id . '","' . $category_name . '"] ,';
                 }
             }
             $final = substr($final, 0, -1);
@@ -1563,10 +1572,12 @@ class Map extends CI_Controller {
             $record = array();
             foreach ($filter_attributes as $filters) {
                 echo $filters;
-                $this->form_validation->set_rules($filters, $filters, 'trim|required|min_length[1]|xss_clean');
+                $this->form_validation->set_rules($filters, $filters,
+                 'trim|required|min_length[1]|xss_clean');
             }
             if ($this->form_validation->run() == FALSE) {
-                $this->session->set_flashdata('validate', array('message' => 'Filter attributes cannot be empty', 'type' => 'warning'));
+                $this->session->set_flashdata('validate', array('message' => 
+                'Filter attributes cannot be empty', 'type' => 'warning'));
                 redirect(base_url() . 'map/mapview/' . $form_id);
             } else {
                 $lat = $this->input->post('Lat');
@@ -1608,7 +1619,8 @@ class Map extends CI_Controller {
                 $this->load->library('upload', $config);
                 if (!$this->upload->do_upload('image')) {
                     $this->data['error'] = $this->upload->display_errors();
-                    $this->session->set_flashdata('validate', array('message' => $this->upload->display_errors(), 'type' => 'warning'));
+                    $this->session->set_flashdata('validate', array('message' => 
+                    $this->upload->display_errors(), 'type' => 'warning'));
                 } else {
                     //success
                     $imei_number = (!empty($imei_number)) ? $imei_number : "";
@@ -1620,7 +1632,8 @@ class Map extends CI_Controller {
                         'location' => $location
                     );
                     $this->db->insert('form_results', $data);
-                    $this->session->set_flashdata('validate', array('message' => 'You have added a marker on map successfully', 'type' => 'success'));
+                    $this->session->set_flashdata('validate', array('message' => 
+                    'You have added a marker on map successfully', 'type' => 'success'));
                 }
                 redirect(base_url() . 'map/mapview/' . $form_id);
             }
@@ -1644,7 +1657,8 @@ class Map extends CI_Controller {
             $town_list_array = array();
             foreach ($town_lists as $towns) {
                 if (!in_array($towns['town'], $town_list_array)) {
-                    $town_list_array = array_merge($town_list_array, array($towns['town'] => $towns['town']));
+                    $town_list_array = array_merge($town_list_array, 
+                    array($towns['town'] => $towns['town']));
                 }
             }
             $data['town_list_array'] = $town_list_array;
